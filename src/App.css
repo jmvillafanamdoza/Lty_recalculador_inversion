@@ -8,6 +8,8 @@
 html, body, #root {
   height: 100%;
   width: 100%;
+  margin: 0;
+
 }
 
 
@@ -16,13 +18,10 @@ html, body, #root {
    LAYOUT
 ===================== */
 
-#root {
-  width: 100%;
-}
-
+#root,
 .app-shell {
   min-height: 100vh;
-  width: 100%; /* ✅ */
+  background: transparent;
 }
 
 .topbar {
@@ -78,7 +77,7 @@ html, body, #root {
 .main {
   display: flex;
   justify-content: center;
-  padding: 40px 16px;
+  padding: 20px 10px;
 }
 
 .container {
@@ -241,6 +240,8 @@ input:focus {
   border-radius: 16px;
   box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
   overflow-x: auto;
+  width: 100%;
+  overflow-x: auto;
 }
 
 .table {
@@ -358,10 +359,13 @@ input:focus {
 
 body {
   min-height: 100vh;
+  margin: 0;
   background-image: url("/fondoApp.jpg");
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background-repeat: repeat;      /* ✅ se repite */
+  background-size: 1000px auto;   /* ✅ no la estira */
+  background-position: top left;  /* ✅ desde arriba */
+  background-attachment: scroll;  /* ✅ importante para páginas largas */
+  background-color: #d87a1a;
   font-family: "Inter", system-ui, sans-serif;
   font-size: 14.5px;
   color: #0f172a;
@@ -369,11 +373,11 @@ body {
 
 /* Capa para centrar el contenido */
 .page-center {
-  min-height: calc(100vh - 70px); /* header */
+  min-height: calc(100vh - 70px);
   display: flex;
-  justify-content: center;   /* 👈 CENTRA HORIZONTAL */
+  justify-content: center;
   align-items: flex-start;
-  padding: 40px 16px;
+  padding: 24px 16px; /* reduce padding superior */
 }
 
 /* Panel central */
@@ -384,14 +388,197 @@ body {
   backdrop-filter: blur(10px);
   border-radius: 24px;
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.15);
-  padding: 24px;
+  padding: 28px;
   margin: 0 auto;     /* ✅ centra el panel */
 
 }
+
+.card-panel.wide90 {
+  width: 95vw;              /* 👈 90% del viewport */
+  max-width: none;        /* límite razonable en pantallas grandes */
+  margin: 0 auto;
+}
+
+.card-panel.wide90 input {
+  height: 36px;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
 .error {
   margin-top: 4px;
   font-size: 12px;
   color: #b91c1c;
   font-weight: 600;
 }
+.inv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+}
 
+.inv-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-top: 14px;
+}
+
+.inv-box .inv-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.inv-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.inv-errors {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: rgba(254, 226, 226, 0.7);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #7f1d1d;
+}
+
+.inv-errors ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+@media (max-width: 900px) {
+  .inv-grid {
+    grid-template-columns: 1fr;
+  }
+  .inv-actions {
+    justify-content: flex-start;
+  }
+    .inv-top {
+    grid-template-columns: 1fr;
+  }
+
+  .inv-buttons {
+    justify-content: flex-start;
+  }
+}
+
+/* =====================
+   INVERSIÓN – TOP INPUTS
+===================== */
+
+.inv-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 16px;
+  align-items: end;
+  margin: 20px 0 28px;
+}
+
+.inv-field label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #475569;
+  margin-bottom: 6px;
+}
+
+.inv-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.investment-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.investment-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.investment-inputs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 16px;
+  flex: 1;
+}
+
+.investment-actions {
+  display: flex;
+  gap: 12px;
+}
+.tramos-table {
+  width: 100%;
+  margin-top: 20px;
+}
+.tramos-table input {
+  min-width: 120px;
+}
+
+
+/* =====================
+   diseño ppara la tabla de inversión
+===================== */
+
+/* ====== Tabla Detalle por año (alineación perfecta) ====== */
+.table.year-table {
+  width: 100%;
+  table-layout: fixed; /* 👈 CLAVE */
+}
+
+.table.year-table th,
+.table.year-table td {
+  vertical-align: middle;
+  white-space: nowrap; /* 👈 evita que el texto rompa */
+}
+
+.table.year-table th:nth-child(1),
+.table.year-table td:nth-child(1) { width: 10px; }    /* Año */
+
+.table.year-table th:nth-child(2),
+.table.year-table td:nth-child(2) { width: 110px; }   /* Tasa */
+
+.table.year-table th:nth-child(3),
+.table.year-table td:nth-child(3) { width: 140px; }   /* Aporte */
+
+.table.year-table th:nth-child(4),
+.table.year-table td:nth-child(4) { width: 180px; }  /* ✅ Capital acumulado */
+
+.table.year-table th:nth-child(5),
+.table.year-table td:nth-child(5) { width: 160px; }  /* Interés del año */
+
+.table.year-table th:nth-child(6),
+.table.year-table td:nth-child(6) { width: 180px; }  /* Saldo acumulado */
+
+.table.year-table th.right,
+.table.year-table td.right {
+  text-align: right;
+}
+
+
+
+
+/* =====================
+   Imputs de la pagiand de inversion
+===================== */
+.input-sm {
+  padding: 8px 10px;
+  font-size: 13px;
+  border-radius: 10px;
+  height: 36px;
+  width: 400px;
+}
